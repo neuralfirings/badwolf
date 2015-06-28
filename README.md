@@ -6,6 +6,10 @@ Folder `pcb` contains the design files for the PCB board that connects your Pi t
 
 Folder `cad` is currently empty, but it will contain the Blender file + STLs that makes up the outer casing. This is not needed for your Raspberry Pi to work. More detailed write up to come. 
 
+Currently, it's set up to be a internet controlled dog treat dispenser. But it's really an internet controlled motor, which can be used for many things that involve something that turns. 
+
+Here are some quick notes on how to set this up. I don't include things like AWS config, Firebase config, or how to run a webpage. I'll do a more detailed write up of the architecture later. Maybe I'll even include some diagrams and charts. Ooooo!
+
 ### Start with Raspbian Image
 I started with Adafruit's PiTFT image. This makes it so my Pi can connect to Adafruit's TFT display, which is nice for setting things up. 
 
