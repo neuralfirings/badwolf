@@ -22,6 +22,19 @@ More info: https://www.npmjs.com/package/firebase
 pi@raspberrypi ~ $ sudo npm install firebase
 ```
 
+### Install Motion
+More info: http://www.lavrsen.dk/foswiki/bin/view/Motion/ConfigFileOptions
+
+```shell
+pi@raspberrypi ~ $ sudo apt-get install motion
+pi@raspberrypi ~ $ sudo nano /etc/default/motion
+```
+
+### Install Sound
+```shell
+pi@raspberrypi ~ $ sudo apt-get install lame
+```
+
 ### Install AWS
 More info: http://aws.amazon.com/sdk-for-node-js/ 
 
@@ -30,7 +43,7 @@ pi@raspberrypi ~ $ npm install aws-sdk
 pi@raspberrypi ~ $ cd ~
 pi@raspberrypi ~ $ mkdir .aws
 pi@raspberrypi ~ $ cd .aws
-pi@raspberrypi ~ $ sudo nano credentials
+pi@raspberrypi ~/.aws $ sudo nano credentials
 ```
 
 In credentials, copy/paste:
@@ -42,19 +55,6 @@ aws_secret_access_key = your_secret_key
 
 Then `Ctrl+X` and `Y` then `Enter` to save file. 
 
-### Install Motion
-More info: http://www.lavrsen.dk/foswiki/bin/view/Motion/ConfigFileOptions
-
-```shell
-pi@raspberrypi ~ $ cd ~
-pi@raspberrypi ~ $ sudo apt-get install motion
-pi@raspberrypi ~ $ sudo nano /etc/default/motion
-```
-
-### Install Sound
-```shell
-pi@raspberrypi ~ $ sudo apt-get install lame
-```
 
 ### Set Internet
 
@@ -77,11 +77,7 @@ network={
 
 Then `Ctrl+X` and `Y` then `Enter` to save file. 
 
-<<<<<<< HEAD
 ### Bad Wolf Files
-=======
-# Bad Wolf Files
->>>>>>> b5e7dfeda970bf275cca88bd56139db96bde9763
 
 ```shell
 pi@raspberrypi ~ $ cd ~
@@ -95,7 +91,6 @@ In the `badwolf` folder, edit the following files:
 * edit `badwolf.js`  include your Firebase info (towards the bottom)
 
 ### Start Up Files
->>>>>>> b5e7dfeda970bf275cca88bd56139db96bde9763
 
 ```shell
 pi@raspberrypi ~ $ sudo nano /etc/rc.local
