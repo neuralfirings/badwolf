@@ -2,9 +2,9 @@
 
 Write up on the product: http://blog.nyl.io/dog-treat-dispenser-v3/ 
 
-Folder `pcb` contains the design files for the PCB board that connects your Pi to the Motor. More detailed write up on making custom PCBs here: http://blog.nyl.io/making-custom-pcbs/
+Folder `pcb` contains the design files for the PCB board that connects your Pi to the Motor. This is not needed for your Raspberry Pi to work. More detailed write up on making custom PCBs [on my blog](http://blog.nyl.io/making-custom-pcbs/).
 
-Folder `cad` is currently empty, but it will contain the Blender file + STLs that makes up the outer casing. 
+Folder `cad` is currently empty, but it will contain the Blender file + STLs that makes up the outer casing. This is not needed for your Raspberry Pi to work. More detailed write up to come. 
 
 ### Install Node
 More info: https://learn.adafruit.com/node-embedded-development/installing-node-dot-js
