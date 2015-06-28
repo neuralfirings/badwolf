@@ -1,4 +1,4 @@
-# Instructions 
+# Bad Wolf 
 
 Write up on the product: http://blog.nyl.io/dog-treat-dispenser-v3/ 
 
