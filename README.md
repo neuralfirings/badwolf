@@ -77,7 +77,11 @@ network={
 
 Then `Ctrl+X` and `Y` then `Enter` to save file. 
 
+<<<<<<< HEAD
 ### Bad Wolf Files
+=======
+# Bad Wolf Files
+>>>>>>> b5e7dfeda970bf275cca88bd56139db96bde9763
 
 ```shell
 pi@raspberrypi ~ $ cd ~
@@ -91,6 +95,7 @@ In the `badwolf` folder, edit the following files:
 * edit `badwolf.js`  include your Firebase info (towards the bottom)
 
 ### Start Up Files
+>>>>>>> b5e7dfeda970bf275cca88bd56139db96bde9763
 
 ```shell
 pi@raspberrypi ~ $ sudo nano /etc/rc.local
@@ -130,9 +135,10 @@ use frontend/index.html page to pull the video, audio, and give treats
 ### Cyberduck
 pi@raspberrypi ~ $ sudo chown -R pi badwolf/
 
----
+<!--
 
 # TODO
 - figure out how to either dump or keep .swf in motion
 - figure out SOUND better
-- treat.py, audio.js >> treat.js
+- 
+-->
