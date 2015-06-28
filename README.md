@@ -2,12 +2,9 @@
 
 Write up on the product: http://blog.nyl.io/dog-treat-dispenser-v3/ 
 
-Folder `badwolf` contains everything that is important to your Raspberry Pi. 
-
 Folder `pcb` contains the design files for the PCB board that connects your Pi to the Motor. More detailed write up on making custom PCBs here: http://blog.nyl.io/making-custom-pcbs/
 
 Folder `cad` is currently empty, but it will contain the Blender file + STLs that makes up the outer casing. 
-
 
 ### Install Node
 More info: https://learn.adafruit.com/node-embedded-development/installing-node-dot-js
