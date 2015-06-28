@@ -10,6 +10,8 @@
       $(document).ready(function() {
         console.log("v6!")
 
+        fb_domain = "https://badwolf.firebaseio.com"
+
         var window_focus = true;
         $(window).focus(function() {
           window_focus = true;
@@ -48,7 +50,7 @@
             $(".logout").show()
             $(".login").hide()
 
-            var online = new Firebase("https://badwolf.firebaseio.com/users/" + authData.uid + "/online");
+            var online = new Firebase(fb_domain + "/users/" + authData.uid + "/online");
             window.addEventListener("beforeunload", function(e){
               online.set("offline")
             }, false);
@@ -72,14 +74,14 @@
               }
             }, 1000)
 
-            var fb = new Firebase("https://badwolf.firebaseio.com/users/" + authData.uid);
+            var fb = new Firebase(fb_domain + "/users/" + authData.uid);
             $("#treat").click(function() {
               state = fb.child("treat/state")
               state.set(true)
             })
 
 
-            var img = new Firebase("https://badwolf.firebaseio.com/users/" + authData.uid + "/img");
+            var img = new Firebase(fb_domain + "/users/" + authData.uid + "/img");
             img.on("value", function(snapshot) {
               $("#webcam").attr("src", snapshot.val())
             }, function (errorObject) {
@@ -97,7 +99,7 @@
                 // $("#audioplayer").trigger("play")
               }
             })
-            var audio = new Firebase("https://badwolf.firebaseio.com/users/" + authData.uid + "/audio");
+            var audio = new Firebase(fb_domain + "/users/" + authData.uid + "/audio");
             audio.on("value", function(snapshot) {
               // $("#audio").removeClass("disabled")
               if (isAudioOn()) {
@@ -136,7 +138,7 @@
           }
         }
         // Register the callback to be fired every time auth state changes
-        var ref = new Firebase("https://badwolf.firebaseio.com");
+        var ref = new Firebase(fb_domain);
         ref.onAuth(authDataCallback);
 
         $("#login").click(function() {
