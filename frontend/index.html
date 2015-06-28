@@ -1,0 +1,214 @@
+<html>
+  <head>
+    <title>Bad Wolf</title>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.2.7/firebase.js"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <script>
+      $(document).ready(function() {
+        console.log("v6!")
+
+        var window_focus = true;
+        $(window).focus(function() {
+          window_focus = true;
+        })
+        .blur(function() {
+          window_focus = false;
+        });
+
+        // Audio Helpers
+        curr_player = 1
+        function audiotoggle(act) {
+          if (act == "play") {
+            $(".audio-icon").removeClass("fa-microphone-slash")
+            $(".audio-icon").addClass("fa-microphone")
+            $("#audioplayer-" + curr_player).trigger('play')
+          } else {
+            $(".audio-icon").addClass("fa-microphone-slash")
+            $(".audio-icon").removeClass("fa-microphone")
+            $("#audioplayer-" + curr_player).trigger('pause')
+          }
+        }
+        function isAudioOn() {
+          if ($(".audio-icon").hasClass("fa-microphone")) {
+            return true;
+          }
+          else {
+            return false;
+          }
+        }
+
+        // Create a callback which logs the current auth state
+        function authDataCallback(authData) {
+          if (authData) {
+            console.log("User " + authData.uid + " is logged in with " + authData.provider);
+            $(".badwolf").show()
+            $(".logout").show()
+            $(".login").hide()
+
+            var online = new Firebase("https://badwolf.firebaseio.com/users/" + authData.uid + "/online");
+            window.addEventListener("beforeunload", function(e){
+              online.set("offline")
+            }, false);
+            window.addEventListener("pagehide", function(e){
+              online.set("offline")
+            }, false);          
+            setInterval(function() {
+              if (window_focus) {
+                var timestamp = Math.round((new Date()).getTime());
+                online.set(timestamp)
+                $("#online").text("online").addClass("label-success").removeClass("label-default")
+                $("#currtime").text(new Date())
+                if(isAudioOn()) {
+                  audiotoggle("play")
+                }
+              }
+              else {
+                online.set("offline")
+                audiotoggle("pause")
+                $("#online").text("offline").removeClass("label-success").addClass("label-default")
+              }
+            }, 1000)
+
+            var fb = new Firebase("https://badwolf.firebaseio.com/users/" + authData.uid);
+            $("#treat").click(function() {
+              state = fb.child("treat/state")
+              state.set(true)
+            })
+
+
+            var img = new Firebase("https://badwolf.firebaseio.com/users/" + authData.uid + "/img");
+            img.on("value", function(snapshot) {
+              $("#webcam").attr("src", snapshot.val())
+            }, function (errorObject) {
+              console.log("The read failed: " + errorObject.code);
+            });
+
+
+            $("#audio").click(function() {
+              if (isAudioOn()) {
+                audiotoggle("pause")
+                // $("#audioplayer").trigger("pause")
+              }
+              else {
+                audiotoggle("play")
+                // $("#audioplayer").trigger("play")
+              }
+            })
+            var audio = new Firebase("https://badwolf.firebaseio.com/users/" + authData.uid + "/audio");
+            audio.on("value", function(snapshot) {
+              // $("#audio").removeClass("disabled")
+              if (isAudioOn()) {
+                // $("#audioplayer-"+curr_player).trigger("load")
+                // $("#audioplayer-"+curr_player).trigger("play")
+                if (curr_player==1) {
+                  if ($("#audioplayer-1").find("source").attr("src") != snapshot.val()) {
+                    $("#audioplayer-2").find("source").attr("src", snapshot.val()); 
+                    $("#audioplayer-2").trigger("load")
+                    $("#audioplayer-1").trigger("pause").hide()
+                    $("#audioplayer-2").trigger("play").show()
+                    curr_player=2
+                    console.log(2, $("#audioplayer-"+curr_player).find("source").attr("src"))
+                  }
+                } else {
+                  if ($("#audioplayer-2").find("source").attr("src") != snapshot.val()) {
+                    console.log(1, $("#audioplayer-"+curr_player).find("source").attr("src"))
+                    $("#audioplayer-1").find("source").attr("src", snapshot.val()); 
+                    $("#audioplayer-1").trigger("load")
+                    $("#audioplayer-2").trigger("pause").hide()
+                    $("#audioplayer-1").trigger("play").show()
+                    curr_player=1
+                    console.log(1, $("#audioplayer-"+curr_player).find("source").attr("src"))
+                  }
+                }
+              }
+            }, function (errorObject) {
+              console.log("The read failed: " + errorObject.code);
+            });
+
+          } else {
+            $(".badwolf").hide()
+            $(".logout").hide()
+            $(".login").show()
+            console.log("User is logged out");
+          }
+        }
+        // Register the callback to be fired every time auth state changes
+        var ref = new Firebase("https://badwolf.firebaseio.com");
+        ref.onAuth(authDataCallback);
+
+        $("#login").click(function() {
+          function authHandler(error, authData) {
+            if (error) {
+              console.log("Login Failed!", error);
+            } else {
+              console.log("Authenticated successfully with payload:", authData);
+            }
+          }
+          // Or with an email/password combination
+          ref.authWithPassword({
+            email    : $("#email").val(),
+            password : $("#password").val()
+          }, authHandler);
+        })
+        $("#logout").click(function() {
+          ref.unauth();
+        })
+      })
+    </script>
+    <style>
+      input { margin-bottom: 5px; }
+      #webcam {width: 100%}
+      /*.online {color: ;}*/
+    </style>
+    <meta name="viewport" content="initial-scale = 1.0" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row login">
+        <br />
+        <div class="col-md-offset-2 col-md-3">
+          <input type="email" id="email" class="form-control" placeholder="email">
+        </div>
+        <div class="col-md-3">
+          <input type="password" id="password" class="form-control" placeholder="password">
+        </div>
+        <div class="col-md-2">
+          <button id="login" class="btn btn-default btn-block">Log In</button>
+        </div>
+      </div>
+      <div class="row badwolf" style="display:none">
+        <div class="col-md-8 col-md-offset-2">
+          <h1 class="cxol-md-9">
+            <small style="display:inline-block"><span id="audio"><i class="audio-icon fa fa-microphone"></i></span></small>
+            Bad Wolf
+            <div id="treat" class="btn-treat btn btn-primary btn-lg">Give Treat</div>
+            </h1>
+        </div>
+      </div>
+      <div class="row badwolf" style="display:none">
+        <div class="col-md-8 col-md-offset-2">
+          <img id="webcam" src="">
+          <br />
+          <audio id="audioplayer-1" type="audio/mp3" controls="controls" style="width:100%"><!--  preload="metadata"  -->
+            <source src="" type="audio/mp3"/>
+            Your browser doesn't support the HTML audio tag. Be sad.
+          </audio>
+          <audio id="audioplayer-2" type="audio/mp3" controls="controls" style="width:100%"><!--  preload="metadata"  -->
+            <source src="" type="audio/mp3"/>
+            Your browser doesn't support the HTML audio tag. Be sad.
+          </audio>
+        </div>
+      </div>
+      <div class="row logout" style="display:none">
+        <div class="col-md-8 col-md-offset-2">
+          <div id="online" class="label label-success label-as-badge" class="pull-left"></div>
+          <div id="currtime" class="pull-right"></div><br />
+          <a id="logout" class="pull-right" href="javascript:void(0)">Log Out</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
