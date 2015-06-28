@@ -6,6 +6,13 @@ Folder `pcb` contains the design files for the PCB board that connects your Pi t
 
 Folder `cad` is currently empty, but it will contain the Blender file + STLs that makes up the outer casing. This is not needed for your Raspberry Pi to work. More detailed write up to come. 
 
+### Start with Raspbian Image
+I started with Adafruit's PiTFT image. This makes it so my Pi can connect to Adafruit's TFT display, which is nice for setting things up. 
+
+More info here: https://learn.adafruit.com/adafruit-pitft-3-dot-5-touch-screen-for-raspberry-pi 
+
+After set up, you log in, set your password, timezone, enable camera and reboot. You can go back to these settings by running `sudo raspi-config`.
+
 ### Install Node
 More info: https://learn.adafruit.com/node-embedded-development/installing-node-dot-js
 
