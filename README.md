@@ -1,5 +1,14 @@
 # Instructions 
 
+Write up on the product: http://blog.nyl.io/dog-treat-dispenser-v3/ 
+
+Folder `badwolf` contains everything that is important to your Raspberry Pi. 
+
+Folder `pcb` contains the design files for the PCB board that connects your Pi to the Motor. More detailed write up on making custom PCBs here: http://blog.nyl.io/making-custom-pcbs/
+
+Folder `cad` is currently empty, but it will contain the Blender file + STLs that makes up the outer casing. 
+
+
 ### Install Node
 More info: https://learn.adafruit.com/node-embedded-development/installing-node-dot-js
 
@@ -46,7 +55,7 @@ pi@raspberrypi ~ $ cd .aws
 pi@raspberrypi ~/.aws $ sudo nano credentials
 ```
 
-In credentials, copy/paste:
+In `credentials`, copy/paste:
 ```
 [default]
 aws_access_key_id = your_access_key
@@ -122,14 +131,21 @@ exit 0
 ```
 
 ### Reboot
+```shell
 pi@raspberrypi ~ $ sudo reboot
+```
 
 ### Frontend
-use frontend/index.html page to pull the video, audio, and give treats
+use `frontend/index.html` page to pull the video, audio, and give treats
 
+<!--
 ### Cyberduck
-pi@raspberrypi ~ $ sudo chown -R pi badwolf/
+This is so your user `pi` is corrected permissioned to edit files directly from Cyberduck
 
+```shell
+pi@raspberrypi ~ $ sudo chown -R pi badwolf/
+```
+-->
 <!--
 
 # TODO
